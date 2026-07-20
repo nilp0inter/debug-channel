@@ -1,0 +1,55 @@
+{
+  "manifestVersion": 1,
+  "repositoryId": "1306065111",
+  "packageVersion": "1.0.0",
+  "entryModule": "plugin",
+  "presentation": {
+    "label": "Debug Channel",
+    "summary": "External audio diagnostics channel"
+  },
+  "runtime": {
+    "luaVersion": "Lua 5.4",
+    "apiVersion": "subspace-lua-v1"
+  },
+  "configuration": {
+    "schemaVersion": 1,
+    "data": {
+      "additionalProperties": false,
+      "fields": [
+        {
+          "id": "mode",
+          "type": "string",
+          "default": "ECHO",
+          "allowedValues": [
+            "ECHO",
+            "DELAYED_ECHO",
+            "STT",
+            "TTS",
+            "STT_TTS"
+          ]
+        }
+      ]
+    },
+    "ui": {
+      "fields": [
+        {
+          "field": "mode",
+          "control": "choice",
+          "label": "Mode",
+          "choices": [
+            { "value": "ECHO", "label": "ECHO" },
+            { "value": "DELAYED_ECHO", "label": "DELAYED_ECHO" },
+            { "value": "STT", "label": "STT" },
+            { "value": "TTS", "label": "TTS" },
+            { "value": "STT_TTS", "label": "STT_TTS" }
+          ]
+        }
+      ]
+    }
+  },
+  "capabilities": [
+    "audio.transcription",
+    "audio.synthesis",
+    "audio.playback"
+  ]
+}
