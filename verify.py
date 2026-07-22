@@ -48,8 +48,8 @@ def validate_manifest(data: bytes, modules: dict[str, bytes]) -> None:
         raise ValueError(f"invalid manifest JSON: {exc}") from exc
     if not isinstance(manifest, dict):
         raise ValueError("manifest must be an object")
-    root = expect_keys(manifest, {"manifestVersion", "repositoryId", "packageVersion", "entryModule", "presentation", "runtime", "configuration", "capabilities"}, "manifest")
-    if root["manifestVersion"] != 1 or root["repositoryId"] != REPOSITORY_ID or root["packageVersion"] != "1.0.0":
+    root = expect_keys(manifest, {"manifestVersion", "repositoryId", "packageVersion", "entryModule", "presentation", "runtime", "configuration", "resources", "capabilities"}, "manifest")
+    if root["manifestVersion"] != 1 or root["repositoryId"] != REPOSITORY_ID or root["packageVersion"] != "1.2.0":
         raise ValueError("manifest identity/version is not exact")
     if root["entryModule"] != "plugin" or not isinstance(root["entryModule"], str) or not MODULE_NAME.fullmatch(root["entryModule"]):
         raise ValueError("entryModule is invalid")
@@ -75,6 +75,9 @@ def validate_manifest(data: bytes, modules: dict[str, bytes]) -> None:
     expected_choices = [{"value": value, "label": value} for value in MODES]
     if control != {"field": "mode", "control": "choice", "label": "Mode", "choices": expected_choices}:
         raise ValueError("mode UI choice declaration is not exact")
+    resources = expect_keys(root["resources"], {"mounts"}, "resources")
+    if not isinstance(resources["mounts"], list) or resources["mounts"] != []:
+        raise ValueError("Debug resources must declare an empty mounts array")
     if root["capabilities"] != CAPABILITIES:
         raise ValueError("capability declaration is not exact")
     if "plugin" not in modules:

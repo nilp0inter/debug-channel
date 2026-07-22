@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "repositoryId": "1306065111",
-  "packageVersion": "1.0.0",
+  "packageVersion": "1.2.0",
   "entryModule": "plugin",
   "presentation": {
     "label": "Debug Channel",
@@ -46,6 +46,9 @@
         }
       ]
     }
+  },
+  "resources": {
+    "mounts": []
   },
   "capabilities": [
     "audio.transcription",

@@ -36,8 +36,8 @@ def read_manifest(path: Path) -> bytes:
         raise ValueError("manifestVersion must be 1")
     if manifest.get("repositoryId") != REPOSITORY_ID:
         raise ValueError("repositoryId does not match the durable repository ID")
-    if manifest.get("packageVersion") != "1.0.0":
-        raise ValueError("packageVersion must be 1.0.0")
+    if manifest.get("packageVersion") != "1.2.0":
+        raise ValueError("packageVersion must be 1.2.0")
     if manifest.get("entryModule") != "plugin":
         raise ValueError("entryModule must be plugin")
     runtime = manifest.get("runtime")
