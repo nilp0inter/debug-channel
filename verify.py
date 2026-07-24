@@ -48,8 +48,8 @@ def validate_manifest(data: bytes, modules: dict[str, bytes]) -> None:
         raise ValueError(f"invalid manifest JSON: {exc}") from exc
     if not isinstance(manifest, dict):
         raise ValueError("manifest must be an object")
-    root = expect_keys(manifest, {"manifestVersion", "repositoryId", "packageVersion", "entryModule", "presentation", "runtime", "configuration", "resources", "capabilities"}, "manifest")
-    if root["manifestVersion"] != 1 or root["repositoryId"] != REPOSITORY_ID or root["packageVersion"] != "1.2.0":
+    root = expect_keys(manifest, {"manifestVersion", "repositoryId", "packageVersion", "entryModule", "presentation", "runtime", "configuration", "resources", "profileTypes", "choiceResolvers", "workQueues", "capabilities"}, "manifest")
+    if root["manifestVersion"] != 1 or root["repositoryId"] != REPOSITORY_ID or root["packageVersion"] != "1.3.0":
         raise ValueError("manifest identity/version is not exact")
     if root["entryModule"] != "plugin" or not isinstance(root["entryModule"], str) or not MODULE_NAME.fullmatch(root["entryModule"]):
         raise ValueError("entryModule is invalid")
@@ -78,6 +78,12 @@ def validate_manifest(data: bytes, modules: dict[str, bytes]) -> None:
     resources = expect_keys(root["resources"], {"mounts"}, "resources")
     if not isinstance(resources["mounts"], list) or resources["mounts"] != []:
         raise ValueError("Debug resources must declare an empty mounts array")
+    if not isinstance(root["profileTypes"], list) or root["profileTypes"] != []:
+        raise ValueError("Debug profileTypes must declare an explicit empty array")
+    if not isinstance(root["choiceResolvers"], list) or root["choiceResolvers"] != []:
+        raise ValueError("Debug choiceResolvers must declare an explicit empty array")
+    if not isinstance(root["workQueues"], list) or root["workQueues"] != []:
+        raise ValueError("Debug workQueues must declare an explicit empty array")
     if root["capabilities"] != CAPABILITIES:
         raise ValueError("capability declaration is not exact")
     if "plugin" not in modules:

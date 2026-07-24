@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "repositoryId": "1306065111",
-  "packageVersion": "1.2.0",
+  "packageVersion": "1.3.0",
   "entryModule": "plugin",
   "presentation": {
     "label": "Debug Channel",
@@ -50,6 +50,9 @@
   "resources": {
     "mounts": []
   },
+  "profileTypes": [],
+  "choiceResolvers": [],
+  "workQueues": [],
   "capabilities": [
     "audio.transcription",
     "audio.synthesis",
